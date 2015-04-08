@@ -80,7 +80,7 @@ function createShiftArr(step) {
 function vkbeautify(){
 	this.step = '    '; // 4 spaces
 	this.shift = createShiftArr(this.step);
-};
+}
 
 vkbeautify.prototype.xml = function(text,step) {
 
