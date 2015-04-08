@@ -84,7 +84,7 @@ function vkbeautify(){
 
 vkbeautify.prototype.xml = function(text,step) {
 
-	var ar = text.replace(/>\s{0,}</g,"><")
+	var ar = text.replace(/>\s*</g,"><")
 				 .replace(/</g,"~::~<")
 				 .replace(/\s*xmlns\:/g,"~::~xmlns:")
 				 .replace(/\s*xmlns\=/g,"~::~xmlns=")
@@ -148,7 +148,7 @@ vkbeautify.prototype.xml = function(text,step) {
 		}
 		
 	return  (str[0] == '\n') ? str.slice(1) : str;
-}
+};
 
 vkbeautify.prototype.json = function(text,step) {
 
@@ -160,7 +160,7 @@ vkbeautify.prototype.json = function(text,step) {
 	if ( typeof text === "object" ) return JSON.stringify(text, null, step);
 		
 	return text; // text is not string nor object
-}
+};
 
 vkbeautify.prototype.css = function(text, step) {
 
@@ -170,7 +170,7 @@ vkbeautify.prototype.css = function(text, step) {
 				.replace(/\;/g,";~::~")
 				.replace(/\/\*/g,"~::~/*")
 				.replace(/\*\//g,"*/~::~")
-				.replace(/~::~\s{0,}~::~/g,"~::~")
+				.replace(/~::~\s*~::~/g,"~::~")
 				.split('~::~'),
 		len = ar.length,
 		deep = 0,
@@ -194,7 +194,7 @@ vkbeautify.prototype.css = function(text, step) {
 			}
 		}
 		return str.replace(/^\n{1,}/,'');
-}
+};
 
 //----------------------------------------------------------------------------
 
@@ -228,8 +228,8 @@ function split_sql(str, tab) {
 				.replace(/ ORDER\s{1,}BY/ig,"~::~ORDER BY ")
 				.replace(/ OVER /ig,"~::~"+tab+"OVER ")
 
-				.replace(/\(\s{0,}SELECT /ig,"~::~(SELECT ")
-				.replace(/\)\s{0,}SELECT /ig,")~::~SELECT ")
+				.replace(/\(\s*SELECT /ig,"~::~(SELECT ")
+				.replace(/\)\s*SELECT /ig,")~::~SELECT ")
 				
 				.replace(/ THEN /ig," THEN~::~"+tab+"")
 				.replace(/ UNION /ig,"~::~UNION~::~")
@@ -238,7 +238,7 @@ function split_sql(str, tab) {
 				.replace(/ WHERE /ig,"~::~WHERE ")
 				.replace(/ WITH /ig,"~::~WITH ")
 				
-				//.replace(/\,\s{0,}\(/ig,",~::~( ")
+				//.replace(/\,\s*\(/ig,",~::~( ")
 				//.replace(/\,/ig,",~::~"+tab+tab+"")
 
 				.replace(/ ALL /ig," ALL ")
@@ -250,8 +250,8 @@ function split_sql(str, tab) {
 				.replace(/ NOT /ig," NOT ")
 				.replace(/ NULL /ig," NULL ")
 				.replace(/ LIKE /ig," LIKE ")
-				.replace(/\s{0,}SELECT /ig,"SELECT ")
-				.replace(/\s{0,}UPDATE /ig,"UPDATE ")
+				.replace(/\s*SELECT /ig,"SELECT ")
+				.replace(/\s*UPDATE /ig,"UPDATE ")
 				.replace(/ SET /ig," SET ")
 							
 				.replace(/~::~{1,}/g,"~::~")
@@ -272,9 +272,8 @@ vkbeautify.prototype.sql = function(text,step) {
 		parenthesisLevel = 0,
 		str = '',
 		ix = 0,
-		shift = step ? createShiftArr(step) : this.shift;;
-
-		for(ix=0;ix<len;ix++) {
+		shift = step ? createShiftArr(step) : this.shift;
+	for(ix=0;ix<len;ix++) {
 			if(ix%2) {
 				ar = ar.concat(ar_by_quote[ix]);
 			} else {
@@ -287,15 +286,15 @@ vkbeautify.prototype.sql = function(text,step) {
 			
 			parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 			
-			if( /\s{0,}\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
+			if( /\s*\s*SELECT\s*/.exec(ar[ix]))  {
 				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
 			} 
 			
-			if( /\s{0,}\s{0,}SET\s{0,}/.exec(ar[ix]))  { 
+			if( /\s*\s*SET\s*/.exec(ar[ix]))  {
 				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
 			} 
 			
-			if( /\s{0,}\(\s{0,}SELECT\s{0,}/.exec(ar[ix]))  { 
+			if( /\s*\(\s*SELECT\s*/.exec(ar[ix]))  {
 				deep++;
 				str += shift[deep]+ar[ix];
 			} else 
@@ -316,7 +315,7 @@ vkbeautify.prototype.sql = function(text,step) {
 
 		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n");
 		return str;
-}
+};
 
 
 vkbeautify.prototype.xmlmin = function(text, preserveComments) {
@@ -324,8 +323,8 @@ vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 	var str = preserveComments ? text
 							   : text.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g,"")
 									 .replace(/[ \r\n\t]{1,}xmlns/g, ' xmlns');
-	return  str.replace(/>\s{0,}</g,"><"); 
-}
+	return  str.replace(/>\s*</g,"><");
+};
 
 vkbeautify.prototype.jsonmin = function(text) {
 
@@ -333,7 +332,7 @@ vkbeautify.prototype.jsonmin = function(text) {
 	
 	return JSON.stringify(JSON.parse(text), null, 0); 
 				
-}
+};
 
 vkbeautify.prototype.cssmin = function(text, preserveComments) {
 	
@@ -346,11 +345,11 @@ vkbeautify.prototype.cssmin = function(text, preserveComments) {
 			  .replace(/\;\s{1,}/g,";")
 			  .replace(/\/\*\s{1,}/g,"/*")
 			  .replace(/\*\/\s{1,}/g,"*/");
-}
+};
 
 vkbeautify.prototype.sqlmin = function(text) {
 	return text.replace(/\s{1,}/g," ").replace(/\s{1,}\(/,"(").replace(/\s{1,}\)/,")");
-}
+};
 
 window.vkbeautify = new vkbeautify();
 
