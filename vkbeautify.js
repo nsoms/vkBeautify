@@ -150,8 +150,8 @@ vkbeautify.prototype.xml = function(text,step) {
 				str += ar[ix];
 			}
 		}
-		
-	return  (str[0] == '\n') ? str.slice(1) : str;
+
+	return  (str.charAt(0) === '\n') ? str.slice(1) : str;
 };
 
 vkbeautify.prototype.json = function(text,step) {
