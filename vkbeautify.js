@@ -152,7 +152,7 @@ vkbeautify.prototype.xml = function(text,step) {
 
 vkbeautify.prototype.json = function(text,step) {
 
-	var step = step ? step : this.step;
+	step = step ? step : this.step;
 	
 	if (typeof JSON === 'undefined' ) return text; 
 	
