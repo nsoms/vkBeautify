@@ -267,8 +267,8 @@ vkbeautify.prototype.sql = function(text,step) {
 		ar = [],
 		deep = 0,
 		tab = this.step,//+this.step,
-		inComment = true,
-		inQuote = false,
+		// inComment = true,
+		// inQuote = false,
 		parenthesisLevel = 0,
 		str = '',
 		ix,
@@ -310,7 +310,7 @@ vkbeautify.prototype.sql = function(text,step) {
 					deep--;
 				}
 			} 
-			var junk = 0;
+			// var junk = 0;
 		}
 
 		str = str.replace(/^\n+/,'').replace(/\n+/g,"\n");
