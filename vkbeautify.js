@@ -167,7 +167,7 @@ vkbeautify.prototype.css = function(text, step) {
 	var ar = text.replace(/\s+/g,' ')
 				.replace(/{/g,"{~::~")
 				.replace(/}/g,"~::~}~::~")
-				.replace(/\;/g,";~::~")
+				.replace(/;/g,";~::~")
 				.replace(/\/\*/g,"~::~/*")
 				.replace(/\*\//g,"*/~::~")
 				.replace(/~::~\s*~::~/g,"~::~")
@@ -261,7 +261,7 @@ function split_sql(str, tab) {
 vkbeautify.prototype.sql = function(text,step) {
 
 	var ar_by_quote = text.replace(/\s+/g," ")
-							.replace(/\'/ig,"~::~\'")
+							.replace(/'/ig,"~::~\'")
 							.split('~::~'),
 		len = ar_by_quote.length,
 		ar = [],
@@ -298,7 +298,7 @@ vkbeautify.prototype.sql = function(text,step) {
 				deep++;
 				str += shift[deep]+ar[ix];
 			} else 
-			if( /\'/.exec(ar[ix]) )  { 
+			if( /'/.exec(ar[ix]) )  {
 				if(parenthesisLevel<1 && deep) {
 					deep--;
 				}
@@ -321,7 +321,7 @@ vkbeautify.prototype.sql = function(text,step) {
 vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 
 	var str = preserveComments ? text
-							   : text.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g,"")
+							   : text.replace(/<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)>/g,"")
 									 .replace(/[ \r\n\t]+xmlns/g, ' xmlns');
 	return  str.replace(/>\s*</g,"><");
 };
