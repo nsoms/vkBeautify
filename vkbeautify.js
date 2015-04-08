@@ -122,7 +122,7 @@ vkbeautify.prototype.xml = function(text,step) {
 				}
 			} else
 			 // <elm> //
-			if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) == -1 && ar[ix].search(/\/>/) == -1 ) {
+			if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) === -1 && ar[ix].search(/\/>/) === -1 ) {
 				str = !inComment ? str += shift[deep++]+ar[ix] : str += ar[ix];
 			} else 
 			 // <elm>...</elm> //
