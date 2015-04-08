@@ -165,8 +165,8 @@ vkbeautify.prototype.json = function(text,step) {
 vkbeautify.prototype.css = function(text, step) {
 
 	var ar = text.replace(/\s+/g,' ')
-				.replace(/\{/g,"{~::~")
-				.replace(/\}/g,"~::~}~::~")
+				.replace(/{/g,"{~::~")
+				.replace(/}/g,"~::~}~::~")
 				.replace(/\;/g,";~::~")
 				.replace(/\/\*/g,"~::~/*")
 				.replace(/\*\//g,"*/~::~")
@@ -180,10 +180,10 @@ vkbeautify.prototype.css = function(text, step) {
 		
 		for(ix=0;ix<len;ix++) {
 
-			if( /\{/.exec(ar[ix]))  { 
+			if( /{/.exec(ar[ix]))  {
 				str += shift[deep++]+ar[ix];
 			} else 
-			if( /\}/.exec(ar[ix]))  { 
+			if( /}/.exec(ar[ix]))  {
 				str += shift[--deep]+ar[ix];
 			} else
 			if( /\*\\/.exec(ar[ix]))  { 
@@ -340,9 +340,9 @@ vkbeautify.prototype.cssmin = function(text, preserveComments) {
 							   : text.replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g,"") ;
 
 	return str.replace(/\s+/g,' ')
-			  .replace(/\{\s+/g,"{")
-			  .replace(/\}\s+/g,"}")
-			  .replace(/\;\s+/g,";")
+			  .replace(/{\s+/g,"{")
+			  .replace(/}\s+/g,"}")
+			  .replace(/;\s+/g,";")
 			  .replace(/\/\*\s+/g,"/*")
 			  .replace(/\*\/\s+/g,"*/");
 };
