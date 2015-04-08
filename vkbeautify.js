@@ -175,7 +175,7 @@ vkbeautify.prototype.css = function(text, step) {
 		len = ar.length,
 		deep = 0,
 		str = '',
-		ix = 0,
+		ix,
 		shift = step ? createShiftArr(step) : this.shift;
 		
 		for(ix=0;ix<len;ix++) {
