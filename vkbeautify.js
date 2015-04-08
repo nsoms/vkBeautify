@@ -113,7 +113,9 @@ vkbeautify.prototype.xml = function(text,step) {
 			} else 
 			// <elm></elm> //
 			if( /^<\w/.exec(ar[ix-1]) && /^<\/\w/.exec(ar[ix]) &&
-				/^<[\w:\-\.,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.,]+/.exec(ar[ix])[0].replace('/','')) {
+					// This comparison will eventually compare an array with a single string item to another string
+					// so we voluntarily use '=='
+				/^<[\w:\-\.,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.,]+/.exec(ar[ix])[0].replace('/','')) { // jshint ignore:line
 				str += ar[ix];
 				if(!inComment) {
 					deep--;
