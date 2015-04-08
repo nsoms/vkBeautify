@@ -93,7 +93,7 @@ vkbeautify.prototype.xml = function(text,step) {
 		inComment = false,
 		deep = 0,
 		str = '',
-		ix = 0,
+		ix,
 		shift = step ? createShiftArr(step) : this.shift;
 
 		for(ix=0;ix<len;ix++) {
@@ -271,7 +271,7 @@ vkbeautify.prototype.sql = function(text,step) {
 		inQuote = false,
 		parenthesisLevel = 0,
 		str = '',
-		ix = 0,
+		ix,
 		shift = step ? createShiftArr(step) : this.shift;
 	for(ix=0;ix<len;ix++) {
 			if(ix%2) {
