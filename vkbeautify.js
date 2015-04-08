@@ -158,7 +158,7 @@ vkbeautify.prototype.json = function(text,step) {
 
 	step = step ? step : this.step;
 	
-	if (typeof JSON === 'undefined' ) return text; 
+	if (typeof JSON === 'undefined' ) return text;
 	
 	if ( typeof text === "string" ) return JSON.stringify(JSON.parse(text), null, step);
 	if ( typeof text === "object" ) return JSON.stringify(text, null, step);
@@ -203,7 +203,7 @@ vkbeautify.prototype.css = function(text, step) {
 //----------------------------------------------------------------------------
 
 function isSubquery(str, parenthesisLevel) {
-	return  parenthesisLevel - (str.replace(/\(/g,'').length - str.replace(/\)/g,'').length )
+	return  parenthesisLevel - (str.replace(/\(/g,'').length - str.replace(/\)/g,'').length );
 }
 
 function split_sql(str, tab) {
@@ -291,11 +291,11 @@ vkbeautify.prototype.sql = function(text,step) {
 			parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 			
 			if( /\s*\s*SELECT\s*/.exec(ar[ix]))  {
-				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"")
+				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"");
 			} 
 			
 			if( /\s*\s*SET\s*/.exec(ar[ix]))  {
-				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"")
+				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"");
 			} 
 			
 			if( /\s*\(\s*SELECT\s*/.exec(ar[ix]))  {
