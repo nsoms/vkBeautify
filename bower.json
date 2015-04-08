@@ -25,6 +25,7 @@
   "ignore": [
     ".bowerrc",
     ".gitignore",
+    ".jshintrc",
     "html",
     "php",
     "change.log",
