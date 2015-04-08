@@ -86,8 +86,8 @@ vkbeautify.prototype.xml = function(text,step) {
 
 	var ar = text.replace(/>\s*</g,"><")
 				 .replace(/</g,"~::~<")
-				 .replace(/\s*xmlns\:/g,"~::~xmlns:")
-				 .replace(/\s*xmlns\=/g,"~::~xmlns=")
+				 .replace(/\s*xmlns:/g,"~::~xmlns:")
+				 .replace(/\s*xmlns=/g,"~::~xmlns=")
 				 .split('~::~'),
 		len = ar.length,
 		inComment = false,
@@ -102,18 +102,18 @@ vkbeautify.prototype.xml = function(text,step) {
 				str += shift[deep]+ar[ix];
 				inComment = true; 
 				// end comment  or <![CDATA[...]]> //
-				if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1 ) { 
+				if(ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1 ) {
 					inComment = false; 
 				}
 			} else 
 			// end comment  or <![CDATA[...]]> //
-			if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1) { 
+			if(ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1) {
 				str += ar[ix];
 				inComment = false; 
 			} else 
 			// <elm></elm> //
 			if( /^<\w/.exec(ar[ix-1]) && /^<\/\w/.exec(ar[ix]) &&
-				/^<[\w:\-\.\,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.\,]+/.exec(ar[ix])[0].replace('/','')) { 
+				/^<[\w:\-\.,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.,]+/.exec(ar[ix])[0].replace('/','')) {
 				str += ar[ix];
 				if(!inComment) deep--;
 			} else
@@ -138,7 +138,7 @@ vkbeautify.prototype.xml = function(text,step) {
 				str += shift[deep]+ar[ix];
 			} else 
 			// xmlns //
-			if( ar[ix].search(/xmlns\:/) > -1  || ar[ix].search(/xmlns\=/) > -1) { 
+			if( ar[ix].search(/xmlns:/) > -1  || ar[ix].search(/xmlns=/) > -1) {
 				str += shift[deep]+ar[ix];
 			} 
 			
@@ -238,8 +238,8 @@ function split_sql(str, tab) {
 				.replace(/ WHERE /ig,"~::~WHERE ")
 				.replace(/ WITH /ig,"~::~WITH ")
 				
-				//.replace(/\,\s*\(/ig,",~::~( ")
-				//.replace(/\,/ig,",~::~"+tab+tab+"")
+				//.replace(/,\s*\(/ig,",~::~( ")
+				//.replace(/,/ig,",~::~"+tab+tab+"")
 
 				.replace(/ ALL /ig," ALL ")
 				.replace(/ AS /ig," AS ")
@@ -287,11 +287,11 @@ vkbeautify.prototype.sql = function(text,step) {
 			parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
 			
 			if( /\s*\s*SELECT\s*/.exec(ar[ix]))  {
-				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
+				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"")
 			} 
 			
 			if( /\s*\s*SET\s*/.exec(ar[ix]))  {
-				ar[ix] = ar[ix].replace(/\,/g,",\n"+tab+tab+"")
+				ar[ix] = ar[ix].replace(/,/g,",\n"+tab+tab+"")
 			} 
 			
 			if( /\s*\(\s*SELECT\s*/.exec(ar[ix]))  {
