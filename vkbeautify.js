@@ -164,7 +164,7 @@ vkbeautify.prototype.json = function(text,step) {
 
 vkbeautify.prototype.css = function(text, step) {
 
-	var ar = text.replace(/\s{1,}/g,' ')
+	var ar = text.replace(/\s+/g,' ')
 				.replace(/\{/g,"{~::~")
 				.replace(/\}/g,"~::~}~::~")
 				.replace(/\;/g,";~::~")
@@ -193,7 +193,7 @@ vkbeautify.prototype.css = function(text, step) {
 				str += shift[deep]+ar[ix];
 			}
 		}
-		return str.replace(/^\n{1,}/,'');
+		return str.replace(/^\n+/,'');
 };
 
 //----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ function isSubquery(str, parenthesisLevel) {
 
 function split_sql(str, tab) {
 
-	return str.replace(/\s{1,}/g," ")
+	return str.replace(/\s+/g," ")
 
 				.replace(/ AND /ig,"~::~"+tab+tab+"AND ")
 				.replace(/ BETWEEN /ig,"~::~"+tab+"BETWEEN ")
@@ -212,20 +212,20 @@ function split_sql(str, tab) {
 				.replace(/ ELSE /ig,"~::~"+tab+"ELSE ")
 				.replace(/ END /ig,"~::~"+tab+"END ")
 				.replace(/ FROM /ig,"~::~FROM ")
-				.replace(/ GROUP\s{1,}BY/ig,"~::~GROUP BY ")
+				.replace(/ GROUP\s+BY/ig,"~::~GROUP BY ")
 				.replace(/ HAVING /ig,"~::~HAVING ")
 				//.replace(/ SET /ig," SET~::~")
 				.replace(/ IN /ig," IN ")
 				
 				.replace(/ JOIN /ig,"~::~JOIN ")
-				.replace(/ CROSS~::~{1,}JOIN /ig,"~::~CROSS JOIN ")
-				.replace(/ INNER~::~{1,}JOIN /ig,"~::~INNER JOIN ")
-				.replace(/ LEFT~::~{1,}JOIN /ig,"~::~LEFT JOIN ")
-				.replace(/ RIGHT~::~{1,}JOIN /ig,"~::~RIGHT JOIN ")
+				.replace(/ CROSS~::~+JOIN /ig,"~::~CROSS JOIN ")
+				.replace(/ INNER~::~+JOIN /ig,"~::~INNER JOIN ")
+				.replace(/ LEFT~::~+JOIN /ig,"~::~LEFT JOIN ")
+				.replace(/ RIGHT~::~+JOIN /ig,"~::~RIGHT JOIN ")
 				
 				.replace(/ ON /ig,"~::~"+tab+"ON ")
 				.replace(/ OR /ig,"~::~"+tab+tab+"OR ")
-				.replace(/ ORDER\s{1,}BY/ig,"~::~ORDER BY ")
+				.replace(/ ORDER\s+BY/ig,"~::~ORDER BY ")
 				.replace(/ OVER /ig,"~::~"+tab+"OVER ")
 
 				.replace(/\(\s*SELECT /ig,"~::~(SELECT ")
@@ -254,13 +254,13 @@ function split_sql(str, tab) {
 				.replace(/\s*UPDATE /ig,"UPDATE ")
 				.replace(/ SET /ig," SET ")
 							
-				.replace(/~::~{1,}/g,"~::~")
+				.replace(/~::~+/g,"~::~")
 				.split('~::~');
 }
 
 vkbeautify.prototype.sql = function(text,step) {
 
-	var ar_by_quote = text.replace(/\s{1,}/g," ")
+	var ar_by_quote = text.replace(/\s+/g," ")
 							.replace(/\'/ig,"~::~\'")
 							.split('~::~'),
 		len = ar_by_quote.length,
@@ -313,7 +313,7 @@ vkbeautify.prototype.sql = function(text,step) {
 			var junk = 0;
 		}
 
-		str = str.replace(/^\n{1,}/,'').replace(/\n{1,}/g,"\n");
+		str = str.replace(/^\n+/,'').replace(/\n+/g,"\n");
 		return str;
 };
 
@@ -322,7 +322,7 @@ vkbeautify.prototype.xmlmin = function(text, preserveComments) {
 
 	var str = preserveComments ? text
 							   : text.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g,"")
-									 .replace(/[ \r\n\t]{1,}xmlns/g, ' xmlns');
+									 .replace(/[ \r\n\t]+xmlns/g, ' xmlns');
 	return  str.replace(/>\s*</g,"><");
 };
 
@@ -339,16 +339,16 @@ vkbeautify.prototype.cssmin = function(text, preserveComments) {
 	var str = preserveComments ? text
 							   : text.replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g,"") ;
 
-	return str.replace(/\s{1,}/g,' ')
-			  .replace(/\{\s{1,}/g,"{")
-			  .replace(/\}\s{1,}/g,"}")
-			  .replace(/\;\s{1,}/g,";")
-			  .replace(/\/\*\s{1,}/g,"/*")
-			  .replace(/\*\/\s{1,}/g,"*/");
+	return str.replace(/\s+/g,' ')
+			  .replace(/\{\s+/g,"{")
+			  .replace(/\}\s+/g,"}")
+			  .replace(/\;\s+/g,";")
+			  .replace(/\/\*\s+/g,"/*")
+			  .replace(/\*\/\s+/g,"*/");
 };
 
 vkbeautify.prototype.sqlmin = function(text) {
-	return text.replace(/\s{1,}/g," ").replace(/\s{1,}\(/,"(").replace(/\s{1,}\)/,")");
+	return text.replace(/\s+/g," ").replace(/\s+\(/,"(").replace(/\s+\)/,")");
 };
 
 window.vkbeautify = new vkbeautify();
